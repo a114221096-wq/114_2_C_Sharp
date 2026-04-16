@@ -1,0 +1,69 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace Telephone_Format
+{
+    public partial class Form1 : Form
+    {
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        // The IsValidNumber method accepts a string and
+        // returns true if it contains 10 digits, or false
+        // otherwise.
+        private bool IsValidNumber(string str)
+        {
+            str = str.Trim(); // Remove leading and trailing whitespace
+            if (str.Length != 10)
+            {
+                return false;
+                foreach (char c in str)
+                {
+                    if (!char.IsDigit(c))
+                    {
+                        return false;
+                    }
+                }
+                return true;
+            }
+        }
+
+        // The TelephoneFormat method accepts a string argument
+        // by reference and formats it as a telephone number.
+        private void TelephoneFormat(ref string str)
+        {
+           str = str.Insert(0, "(")
+                    .Insert(3, ") ")
+                    .Insert(9, "-");
+        }
+
+        private void formatButton_Click(object sender, EventArgs e)
+        {
+            string number = numberTextBox.Text;
+            if (IsValidNumber(number))
+            {
+                TelephoneFormat(ref number);
+                numberTextBox.Text = number;
+            }
+            else
+            {
+                MessageBox.Show("Invalid phone number. Please enter a 10-digit number.");
+            }
+        }
+
+        private void exitButton_Click(object sender, EventArgs e)
+        {
+            // Close the form.
+            this.Close();
+        }
+    }
+}
